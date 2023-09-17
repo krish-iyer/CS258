@@ -124,7 +124,7 @@ class random_gen():
         start_time = queue[0]
         runtime = sum(queue) + sum(resp_list)
     
-        return start_time, runtime, queue.copy(), resp_list.copy()
+        return start_time, runtime, queue.tolist().copy(), resp_list.copy()
 
 if __name__ == "__main__":
 

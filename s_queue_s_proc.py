@@ -14,7 +14,7 @@ if __name__ == "__main__":
         start_time, runtime, queue, resp_list = random_obj.gen_requests(5, num_req, int(0.1*num_req), [3,20],[200,1000])
 
         env = simpy.Environment(start_time)
-        serv = server(env, queue.tolist(), resp_list)    
+        serv = server(env, queue, resp_list)    
         env.run(runtime)
         
         print("####################################################################")    
