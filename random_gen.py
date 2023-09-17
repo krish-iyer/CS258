@@ -104,7 +104,7 @@ class random_gen():
 
         # make two queues for different requests 
         # size = 0.1*size_of_queue
-        queue_a, queue_b = self.random_select(queue, int(0.1*num_req))
+        queue_a, queue_b = self.random_select(queue, num_long_req)
 
         # response time for queue_a
         # lower bound : 3 ms

@@ -6,7 +6,7 @@ from random_gen import random_gen
 
 if __name__ == "__main__":
 
-    num_req = 100
+    num_req = 10
     
     for i in range(20):
         random_obj = random_gen()
