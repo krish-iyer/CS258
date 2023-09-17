@@ -95,6 +95,37 @@ class random_gen():
     def mean(que):
         return np.mean(que)
      
+    def gen_requests(self, avg_arrival_time, num_req, num_long_req, short_resp, long_resp):
+
+
+        # arrival time : 5ms avg 
+        # requests : 100
+        queue = self.random_poisson(avg_arrival_time,num_req,False,True) 
+
+        # make two queues for different requests 
+        # size = 0.1*size_of_queue
+        queue_a, queue_b = self.random_select(queue, int(0.1*num_req))
+
+        # response time for queue_a
+        # lower bound : 3 ms
+        # upper bound : 20 ms
+        # size : len(queue_a)
+
+        resp_list_a = self.random_uniform(short_resp[0],short_resp[1],len(queue_a))
+
+
+        # response time for queue_b
+        # lower bound : 200 ms
+        # upper bound : 1000 ms
+        # size : len(queue_b)
+
+        resp_list_b = self.random_uniform(long_resp[0],long_resp[1],len(queue_b))
+        
+        start_time = queue[0]
+        runtime = sum(resp_list_a) + sum(queue_a) + sum(queue_b) + sum(resp_list_b)
+    
+        return start_time, runtime, queue.copy(), queue_a.copy(), queue_b.copy(), resp_list_a.tolist().copy(), resp_list_b.tolist().copy()
+
 if __name__ == "__main__":
 
     import matplotlib.pyplot as plot
