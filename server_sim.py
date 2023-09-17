@@ -10,15 +10,16 @@ class server():
         self.server_std_resp = None
         self.end_time = None
         self.start_time = que_a[0] if que_a[0] < que_b [0] else que_b[0] 
-        self.action = env.process(self.run(que_a, que_b, resp_a, resp_b))
         self.arrival_rate = None
         self.server_util = None
         self.server_resp = []
         self.misc_avg_resp = None
+        self.action = env.process(self.run(que_a, que_b, resp_a, resp_b))
+
         
     def run(self, que_a, que_b, resp_a, resp_b): 
         
-        for i in range(self.size):
+        while (len(que_a) + len(que_b)) != 0:
             
             if(len(que_a) != 0 or len(que_b) != 0):
                 
