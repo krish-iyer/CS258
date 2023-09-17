@@ -6,15 +6,15 @@ from random_gen import random_gen
 
 if __name__ == "__main__":
 
-    num_req = 10
+    num_req = 100
     
     for i in range(20):
         random_obj = random_gen()
 
-        start_time, runtime, queue, queue_a, queue_b, resp_list_a, resp_list_b = random_obj.gen_requests(5, num_req, int(0.1*num_req), [3,20],[200,1000])
+        start_time, runtime, queue, resp_list = random_obj.gen_requests(5, num_req, int(0.1*num_req), [3,20],[200,1000])
 
         env = simpy.Environment(start_time)
-        serv = server(env, queue_a, queue_b, resp_list_a, resp_list_b)    
+        serv = server(env, queue.tolist(), resp_list)    
         env.run(runtime)
         
         print("####################################################################")    
