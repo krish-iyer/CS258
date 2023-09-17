@@ -15,34 +15,71 @@ DONE:
 '''
 
 class server():
-    def __init__(self, env, queue_a, queue_b, resp_list_a, resp_list_b):
+    def __init__(self, env, que_a, que_b, resp_a, resp_b):
         self.env = env
-        self.action = env.process(self.run(queue_a, queue_b, resp_list_a, resp_list_b))
+        self.action = env.process(self.run(que_a, que_b, resp_a, resp_b))
+        self.size = len(que_a) + len(que_b)
     
-    def run(self, queue_a, queue_b, resp_list_a, resp_list_b): 
+    def run(self, que_a, que_b, resp_a, resp_b): 
         
-        for i in range(len(queue_a) + len(queue_b)):
-            if(len(queue_a) != 0 or len(queue_b) != 0):
-
-                if((len(queue_a) != 0 and env.now >= queue_a[0]) ):
-                    yield self.env.timeout(resp_list_a[0])
-                    print("[Queue A] arr_t: {} ; resp {}".format(queue_a[0],env.now))
-                    queue_a.pop(0)
-                    resp_list_a.pop(0)
+        for i in range(self.size):
+            
+            if(len(que_a) != 0 or len(que_b) != 0):
                 
-                elif(len(queue_b) != 0 and env.now >= queue_b[0]):
-                    yield self.env.timeout(resp_list_b[0])
-                    print("[Queue B] arr_t: {} ; resp {}".format(queue_b[0],env.now))
-                    queue_b.pop(0)
-                    resp_list_b.pop(0)    
-                                
-                elif(env.now < queue_a[0] and env.now < queue_b[0]):
-                    if(env.now < queue_a[0]):
-                        yield self.env.timeout(queue_a[0] - env.now)
-                    else:
-                        yield self.env.timeout(queue_b[0] - env.now)
+                if((len(que_a) == 0 and env.now < que_b[0]) or (len(que_b) == 0 and env.now < que_a[0]) or \
+                        ((len(que_a) != 0 and len(que_b) != 0) and (env.now < que_a[0] and env.now < que_b[0]))):
+                    
+                    if (len(que_a) != 0 and len(que_b) != 0 ):
+                        if(que_a[0] < que_b[0]):
+                            yield self.env.timeout(que_a[0] - env.now)
+                        else:
+                            yield self.env.timeout(que_b[0] - env.now)
+                    elif(len(que_a) == 0):
+                        yield self.env.timeout(que_b[0] - env.now)
+                    elif(len(que_b) == 0):
+                        yield self.env.timeout(que_a[0] - env.now)
+                        
+                if((len(que_a) != 0) and (len(que_b) != 0)):
+                    if(env.now >= que_a[0] and env.now >= que_b[0]):
+                        if(que_a[0] < que_b[0]):
+                            yield self.env.timeout(resp_a[0])
+                            print("[Queue A] arr_t: {} ; resp {}".format(que_a[0],env.now))
+                            que_a.pop(0)
+                            resp_a.pop(0)
+                        else:
+                            yield self.env.timeout(resp_b[0])
+                            print("[Queue B] arr_t: {} ; resp {}".format(que_b[0],env.now))
+                            que_b.pop(0)
+                            resp_b.pop(0)
+                    
+                    elif(env.now >= que_a[0]):
+                        yield self.env.timeout(resp_a[0])
+                        print("[Queue A] arr_t: {} ; resp {}".format(que_a[0],env.now))
+                        que_a.pop(0)
+                        resp_a.pop(0)
 
-        
+                    elif(env.now >= que_b[0]):
+                        yield self.env.timeout(resp_b[0])
+                        print("[Queue B] arr_t: {} ; resp {}".format(que_b[0],env.now))
+                        que_b.pop(0)
+                        resp_b.pop(0)
+
+                        
+                elif((len(que_a) != 0 and env.now >= que_a[0]) ):
+                    yield self.env.timeout(resp_a[0])
+                    print("[Queue A] arr_t: {} ; resp {}".format(que_a[0],env.now))
+                    que_a.pop(0)
+                    resp_a.pop(0)
+                
+                elif(len(que_b) != 0 and env.now >= que_b[0]):
+                    yield self.env.timeout(resp_b[0])
+                    print("[Queue B] arr_t: {} ; resp {}".format(que_b[0],env.now))
+                    que_b.pop(0)
+                    resp_b.pop(0)
+                                
+        print("len_q_a: {} len_q_b: {} q_a: {} q_b: {} resp_a: {} resp_b: {}".format(len(que_a),len(que_b), que_a, que_b, resp_a, resp_b))
+    
+
 if __name__ == "__main__":
 
     num_req = 100
@@ -79,7 +116,6 @@ if __name__ == "__main__":
     #print("resp : {} {} ".format(resp_list_a, resp_list_b))
     
     runtime = sum(resp_list_a) + sum(queue_a) + sum(queue_b) + sum(resp_list_b)
-    print("total_resp : {} total_Q: {}".format(sum(resp_list_a), sum(queue_a)))
+    print("runtime {}".format(runtime))
     env.run(runtime)
 
-    print(len(queue_a) + len(queue_b))
