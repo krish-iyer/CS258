@@ -82,12 +82,19 @@ class random_gen():
     '''
     def random_select(self, que, size, replace=False):
             
-        
+        unique_que = list(que)
         rand_c = np.random.choice(que, size, replace=replace)
-        unique_que = list(set(que) - set(rand_c))
-        
+        for num in rand_c:
+            unique_que.remove(num)
+        #print("random_selection {} {}".format(que,rand_c))
         return sorted(unique_que), sorted(rand_c)
-        
+    
+    def std(que):
+        return np.std(que)
+    
+    def mean(que):
+        return np.mean(que)
+     
 if __name__ == "__main__":
 
     import matplotlib.pyplot as plot
