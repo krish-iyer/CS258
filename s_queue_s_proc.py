@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import simpy
 from server_sim import server
 import matplotlib.pyplot as plot
 from random_gen import random_gen
@@ -13,7 +12,8 @@ if __name__ == "__main__":
 
         start_time, runtime, queue, resp_list = random_obj.gen_requests(5, num_req, int(0.1*num_req), [3,20],[200,1000])
 
-        serv = server(queue, resp_list)    
+        proc = 1
+        serv = server(queue, resp_list, proc)    
     
         serv.serve()
         print("####################################################################")    
