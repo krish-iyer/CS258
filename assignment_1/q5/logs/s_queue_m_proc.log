@@ -1,0 +1,84 @@
+2023-09-18 13:41:41,699 [INFO] ### Results 0 proc : 20 ###
+2023-09-18 13:41:41,699 [INFO] Arrival Rate : 0.19581222880377616 ; Server Utilisation : 13.898361792424105 ; Server Average Response : 73.11571251122818 ; Server Standard Deviation Response : 192.9519091851511
+2023-09-18 13:41:41,730 [INFO] ### Results 1 proc : 20 ###
+2023-09-18 13:41:41,730 [INFO] Arrival Rate : 0.19619527302525888 ; Server Utilisation : 13.847080560590175 ; Server Average Response : 75.09839327319855 ; Server Standard Deviation Response : 192.78280409447294
+2023-09-18 13:41:41,762 [INFO] ### Results 2 proc : 20 ###
+2023-09-18 13:41:41,762 [INFO] Arrival Rate : 0.19568286215327246 ; Server Utilisation : 13.995918228325463 ; Server Average Response : 74.56765063580731 ; Server Standard Deviation Response : 195.58804629673784
+2023-09-18 13:41:41,802 [INFO] ### Results 3 proc : 20 ###
+2023-09-18 13:41:41,802 [INFO] Arrival Rate : 0.19628833582106944 ; Server Utilisation : 13.886092381770391 ; Server Average Response : 72.8356143341647 ; Server Standard Deviation Response : 192.87100931874062
+2023-09-18 13:41:41,844 [INFO] ### Results 4 proc : 20 ###
+2023-09-18 13:41:41,844 [INFO] Arrival Rate : 0.19624415424706787 ; Server Utilisation : 13.768934950770722 ; Server Average Response : 72.18279790290484 ; Server Standard Deviation Response : 190.70788441489026
+2023-09-18 13:41:41,875 [INFO] ### Results 5 proc : 20 ###
+2023-09-18 13:41:41,875 [INFO] Arrival Rate : 0.1974588083821275 ; Server Utilisation : 13.819569379680388 ; Server Average Response : 72.91913513198983 ; Server Standard Deviation Response : 191.32612918174826
+2023-09-18 13:41:41,906 [INFO] ### Results 6 proc : 20 ###
+2023-09-18 13:41:41,906 [INFO] Arrival Rate : 0.19772234779989034 ; Server Utilisation : 13.679877893000647 ; Server Average Response : 73.84246205829109 ; Server Standard Deviation Response : 189.1189258324155
+2023-09-18 13:41:41,935 [INFO] ### Results 7 proc : 20 ###
+2023-09-18 13:41:41,936 [INFO] Arrival Rate : 0.19783257564663498 ; Server Utilisation : 13.775589358073896 ; Server Average Response : 70.91500718421607 ; Server Standard Deviation Response : 189.4344204079129
+2023-09-18 13:41:41,964 [INFO] ### Results 8 proc : 20 ###
+2023-09-18 13:41:41,964 [INFO] Arrival Rate : 0.19731940693725825 ; Server Utilisation : 13.796273169923584 ; Server Average Response : 73.27255751844399 ; Server Standard Deviation Response : 191.6498772510812
+2023-09-18 13:41:41,992 [INFO] ### Results 9 proc : 20 ###
+2023-09-18 13:41:41,992 [INFO] Arrival Rate : 0.19724255749164166 ; Server Utilisation : 13.855520355586853 ; Server Average Response : 73.98349375362386 ; Server Standard Deviation Response : 192.2768675990421
+2023-09-18 13:41:42,020 [INFO] ### Results 10 proc : 20 ###
+2023-09-18 13:41:42,020 [INFO] Arrival Rate : 0.19897088502503604 ; Server Utilisation : 13.943855845290322 ; Server Average Response : 73.21417215792793 ; Server Standard Deviation Response : 190.89054567090136
+2023-09-18 13:41:42,048 [INFO] ### Results 11 proc : 20 ###
+2023-09-18 13:41:42,049 [INFO] Arrival Rate : 0.19577037825994442 ; Server Utilisation : 13.644832017903399 ; Server Average Response : 70.19682518667231 ; Server Standard Deviation Response : 189.45613763173847
+2023-09-18 13:41:42,077 [INFO] ### Results 12 proc : 20 ###
+2023-09-18 13:41:42,077 [INFO] Arrival Rate : 0.19843084865332353 ; Server Utilisation : 14.191046382441687 ; Server Average Response : 74.7079219913573 ; Server Standard Deviation Response : 194.98486991041838
+2023-09-18 13:41:42,105 [INFO] ### Results 13 proc : 20 ###
+2023-09-18 13:41:42,105 [INFO] Arrival Rate : 0.19839768149025674 ; Server Utilisation : 13.915588501738691 ; Server Average Response : 72.54884522366712 ; Server Standard Deviation Response : 191.0475350858682
+2023-09-18 13:41:42,133 [INFO] ### Results 14 proc : 20 ###
+2023-09-18 13:41:42,133 [INFO] Arrival Rate : 0.19635667181711258 ; Server Utilisation : 13.720079013707245 ; Server Average Response : 70.59103739386946 ; Server Standard Deviation Response : 189.74933388806684
+2023-09-18 13:41:42,161 [INFO] ### Results 15 proc : 20 ###
+2023-09-18 13:41:42,161 [INFO] Arrival Rate : 0.1976160885260443 ; Server Utilisation : 13.784297119823757 ; Server Average Response : 71.62404128379133 ; Server Standard Deviation Response : 189.7642778964343
+2023-09-18 13:41:42,190 [INFO] ### Results 16 proc : 20 ###
+2023-09-18 13:41:42,190 [INFO] Arrival Rate : 0.1972706048416467 ; Server Utilisation : 13.95932176201604 ; Server Average Response : 78.36248159535485 ; Server Standard Deviation Response : 194.77133916290245
+2023-09-18 13:41:42,218 [INFO] ### Results 17 proc : 20 ###
+2023-09-18 13:41:42,218 [INFO] Arrival Rate : 0.19640156222115246 ; Server Utilisation : 13.966483529678964 ; Server Average Response : 74.84774349423458 ; Server Standard Deviation Response : 193.5510800669994
+2023-09-18 13:41:42,246 [INFO] ### Results 18 proc : 20 ###
+2023-09-18 13:41:42,246 [INFO] Arrival Rate : 0.19735451598742385 ; Server Utilisation : 13.629249211836722 ; Server Average Response : 70.53741674879053 ; Server Standard Deviation Response : 187.16442916957595
+2023-09-18 13:41:42,274 [INFO] ### Results 19 proc : 20 ###
+2023-09-18 13:41:42,274 [INFO] Arrival Rate : 0.19801897628573353 ; Server Utilisation : 13.894137849248843 ; Server Average Response : 72.22452820591545 ; Server Standard Deviation Response : 190.17975663377865
+2023-09-18 13:41:42,274 [INFO] ## Final ##
+2023-09-18 13:41:42,274 [INFO] Avg Arrival Rate : 0.19801897628573353 ; Avg Server Utilisation : 13.894137849248843 ; Avg Server Average Response : 72.22452820591545 ; Avg Server Standard Deviation Response : 190.17975663377865
+2023-09-18 18:35:17,016 [INFO] ### Results 0 proc : 20 ###
+2023-09-18 18:35:17,017 [INFO] Arrival Rate : 0.19857483708588253 ; Server Utilisation : 13.996230889405595 ; Server Average Response : 73.31596629585998 ; Server Standard Deviation Response : 192.51404563054405
+2023-09-18 18:35:17,049 [INFO] ### Results 1 proc : 20 ###
+2023-09-18 18:35:17,049 [INFO] Arrival Rate : 0.19731223865772998 ; Server Utilisation : 13.888150960994185 ; Server Average Response : 71.87739291322099 ; Server Standard Deviation Response : 191.356767727726
+2023-09-18 18:35:17,082 [INFO] ### Results 2 proc : 20 ###
+2023-09-18 18:35:17,083 [INFO] Arrival Rate : 0.19703744342779284 ; Server Utilisation : 13.798340334316586 ; Server Average Response : 71.40460915318502 ; Server Standard Deviation Response : 191.11956384410522
+2023-09-18 18:35:17,119 [INFO] ### Results 3 proc : 20 ###
+2023-09-18 18:35:17,119 [INFO] Arrival Rate : 0.19967512682690425 ; Server Utilisation : 13.848445753567376 ; Server Average Response : 77.7712001613457 ; Server Standard Deviation Response : 190.02058088471145
+2023-09-18 18:35:17,157 [INFO] ### Results 4 proc : 20 ###
+2023-09-18 18:35:17,158 [INFO] Arrival Rate : 0.1962142189665659 ; Server Utilisation : 13.538871936525652 ; Server Average Response : 71.40179205109843 ; Server Standard Deviation Response : 187.85731216275082
+2023-09-18 18:35:17,183 [INFO] ### Results 5 proc : 20 ###
+2023-09-18 18:35:17,183 [INFO] Arrival Rate : 0.19578611322968834 ; Server Utilisation : 13.836940486139767 ; Server Average Response : 72.72447090642962 ; Server Standard Deviation Response : 192.41538491556196
+2023-09-18 18:35:17,208 [INFO] ### Results 6 proc : 20 ###
+2023-09-18 18:35:17,208 [INFO] Arrival Rate : 0.1975805121065938 ; Server Utilisation : 13.823568025809223 ; Server Average Response : 70.97128071968056 ; Server Standard Deviation Response : 190.20927517247915
+2023-09-18 18:35:17,231 [INFO] ### Results 7 proc : 20 ###
+2023-09-18 18:35:17,231 [INFO] Arrival Rate : 0.19669528446669685 ; Server Utilisation : 14.027416975658868 ; Server Average Response : 74.55629244248658 ; Server Standard Deviation Response : 194.51952125141702
+2023-09-18 18:35:17,254 [INFO] ### Results 8 proc : 20 ###
+2023-09-18 18:35:17,254 [INFO] Arrival Rate : 0.19591754565084726 ; Server Utilisation : 13.619813185548102 ; Server Average Response : 72.44385822744529 ; Server Standard Deviation Response : 189.40105099132393
+2023-09-18 18:35:17,277 [INFO] ### Results 9 proc : 20 ###
+2023-09-18 18:35:17,278 [INFO] Arrival Rate : 0.19704410136618128 ; Server Utilisation : 13.757563319770627 ; Server Average Response : 71.54592555997874 ; Server Standard Deviation Response : 189.80187445361912
+2023-09-18 18:35:17,300 [INFO] ### Results 10 proc : 20 ###
+2023-09-18 18:35:17,300 [INFO] Arrival Rate : 0.19657592845833197 ; Server Utilisation : 13.716499317655074 ; Server Average Response : 74.86576744669664 ; Server Standard Deviation Response : 191.73830297965895
+2023-09-18 18:35:17,321 [INFO] ### Results 11 proc : 20 ###
+2023-09-18 18:35:17,321 [INFO] Arrival Rate : 0.1972617930524449 ; Server Utilisation : 13.688968529045434 ; Server Average Response : 72.17171432022074 ; Server Standard Deviation Response : 189.38034833162033
+2023-09-18 18:35:17,343 [INFO] ### Results 12 proc : 20 ###
+2023-09-18 18:35:17,343 [INFO] Arrival Rate : 0.19609084321558984 ; Server Utilisation : 13.942943065058152 ; Server Average Response : 74.96520757306277 ; Server Standard Deviation Response : 193.9897851460233
+2023-09-18 18:35:17,365 [INFO] ### Results 13 proc : 20 ###
+2023-09-18 18:35:17,365 [INFO] Arrival Rate : 0.19846109169494994 ; Server Utilisation : 13.945010891851078 ; Server Average Response : 74.27098926252815 ; Server Standard Deviation Response : 192.02686146054148
+2023-09-18 18:35:17,386 [INFO] ### Results 14 proc : 20 ###
+2023-09-18 18:35:17,386 [INFO] Arrival Rate : 0.19671063219881008 ; Server Utilisation : 13.860330440565471 ; Server Average Response : 72.76745923247502 ; Server Standard Deviation Response : 192.67051973158343
+2023-09-18 18:35:17,407 [INFO] ### Results 15 proc : 20 ###
+2023-09-18 18:35:17,408 [INFO] Arrival Rate : 0.19719132497005348 ; Server Utilisation : 13.882568169524157 ; Server Average Response : 77.13775929478676 ; Server Standard Deviation Response : 194.20368578255625
+2023-09-18 18:35:17,429 [INFO] ### Results 16 proc : 20 ###
+2023-09-18 18:35:17,429 [INFO] Arrival Rate : 0.19792265351194394 ; Server Utilisation : 13.594482874547776 ; Server Average Response : 70.61007754985299 ; Server Standard Deviation Response : 186.86454938025437
+2023-09-18 18:35:17,450 [INFO] ### Results 17 proc : 20 ###
+2023-09-18 18:35:17,450 [INFO] Arrival Rate : 0.19772668182454511 ; Server Utilisation : 13.87051924074828 ; Server Average Response : 71.02133286001752 ; Server Standard Deviation Response : 190.81344659207454
+2023-09-18 18:35:17,472 [INFO] ### Results 18 proc : 20 ###
+2023-09-18 18:35:17,472 [INFO] Arrival Rate : 0.19824983405975355 ; Server Utilisation : 13.862656781620457 ; Server Average Response : 72.82659655694219 ; Server Standard Deviation Response : 190.7198326379262
+2023-09-18 18:35:17,493 [INFO] ### Results 19 proc : 20 ###
+2023-09-18 18:35:17,493 [INFO] Arrival Rate : 0.1968721672224706 ; Server Utilisation : 13.917091731488116 ; Server Average Response : 74.35521522315204 ; Server Standard Deviation Response : 192.65434387963288
+2023-09-18 18:35:17,493 [INFO] ## Final ##
+2023-09-18 18:35:17,493 [INFO] Avg Arrival Rate : 0.1968721672224706 ; Avg Server Utilisation : 13.917091731488116 ; Avg Server Average Response : 74.35521522315204 ; Avg Server Standard Deviation Response : 192.65434387963288

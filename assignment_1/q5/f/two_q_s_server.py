@@ -19,7 +19,7 @@ from random_gen import random_gen
 
 if __name__ == "__main__":
 
-    num_req = 100
+    num_req = 10000
     
     rs_arrival_rate_arr = []
     rs_server_util_arr = []

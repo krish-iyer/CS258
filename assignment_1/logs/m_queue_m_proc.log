@@ -1,4 +1,0 @@
-2023-09-18 18:25:34,922 [INFO] ### Results 0 : proc: 20 ###
-2023-09-18 18:25:34,923 [INFO] Arrival Rate : 0.16021165915572727 ; Server Utilisation : 11.172251169084557 ; Server Average Response : 1061.8055321739212 ; Server Standard Deviation Response : 2064.5479492603627
-2023-09-18 18:25:34,923 [INFO] ## Final ##
-2023-09-18 18:25:34,923 [INFO] Avg Arrival Rate : 0.16021165915572727 ; Avg Server Utilisation : 11.172251169084557 ; Avg Server Average Response : 1061.8055321739212 ; Avg Server Standard Deviation Response : 2064.5479492603627
