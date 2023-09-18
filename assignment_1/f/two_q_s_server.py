@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
+import sys
+
+sys.path.append("../")
+
 from server_sim_two_q import server
-import matplotlib.pyplot as plot
 from random_gen import random_gen
 
 if __name__ == "__main__":

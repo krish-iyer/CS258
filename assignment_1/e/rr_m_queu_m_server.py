@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+import sys
+
+sys.path.append("../")
+
 from server_sim_rr_q import server
 from random_gen import random_gen
 
