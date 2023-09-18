@@ -18,9 +18,10 @@ class server():
         self.que = que.copy()
         self.resp_list = resp_list.copy()
 
+        
         for i in range(self.proc):
             self.clock = [que[i] for i in range(self.proc)]
-
+            
         self.multi_queue, self.multi_resp = self.create_multi_queue()
         # print("multi queue: {}".format(self.multi_queue))
         # print("multi_resp : {}".format(self.multi_resp))
@@ -79,7 +80,7 @@ class server():
                     self.server_resp.append(self.clock[proc] -que[0])
                     que.pop(0)
                     resp_list.pop(0)
-            proc += 0
+            proc += 1
         
         self.end_time = max(self.clock)
         server_resp_list = (list(self.server_resp_list))

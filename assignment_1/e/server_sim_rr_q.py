@@ -76,7 +76,7 @@ class server():
                     self.server_resp.append(self.clock[proc] -que[0])
                     que.pop(0)
                     resp_list.pop(0)
-            proc += 0
+            proc += 1
         
         self.end_time = max(self.clock)
         server_resp_list = (list(self.server_resp_list))
