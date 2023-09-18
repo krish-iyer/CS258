@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from sim_server_ex import server
+from server_sim_ex import server
 from random_gen import random_gen
 
 if __name__ == "__main__":
@@ -10,7 +10,7 @@ if __name__ == "__main__":
 
     start_time, runtime, queue, resp_list = random_obj.gen_requests(5, num_req, int(0.1*num_req), [3,20],[200,1000])
 
-    proc = 1
+    proc = 20
     serv = server(queue, resp_list, proc)    
 
     serv.serve()
