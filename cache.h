@@ -1,6 +1,14 @@
 #ifndef CACHE_H
 #define CACHE_H
 
+// Memeory access is 4 bytes addressable
+// Cache line 64 bytes
+// OFFSET: 4 bits   [3:0]
+// SET: 3 bits      [6:4]   depends on cache type
+// TAG: 20 bits     [28:7]  depends on cache type
+// 0 - valid ; 1 - invalid
+// 0 - not modified ; 1 - modified
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<inttypes.h>

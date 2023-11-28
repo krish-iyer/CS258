@@ -6,6 +6,16 @@
 #include<inttypes.h>
 #include "tlb.h"
 
+// Each memory access is 4 bytes
+// 3-level page table
+// 1st level: 6 bits
+// 2nd level: 8 bits
+// 3rd level: 6 bits
+// offset: 9 bits
+// virtual address length: 29 bits
+// physical address length: 20 bits
+// 0 - valid ; 1 - invalid
+
 #define VM_ADDR_MASK                0x000FFFFF
 #define FIRST_LEVEL_VM_ADDR_MASK    0x000FC000
 #define SECOND_LEVEL_VM_ADDR_MASK   0x00003FC0
@@ -45,8 +55,7 @@ class VM{
         
     public:
         VM();
-        int8_t alloc_page(uint32_t virtual_addr);
-        uint32_t get_page(uint32_t virtual_addr);
+        int32_t exec(uint32_t virtual_addr);
         ~VM();
     private:
         uint32_t get_new_addr();
