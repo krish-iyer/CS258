@@ -27,16 +27,24 @@ VM::VM(){
 //  1 - page allocated
 // -1 - invalid address
 
-int8_t VM::alloc_page(uint32_t virtual_addr){
+int32_t VM::exec(uint32_t virtual_addr){
     uint8_t first_level_idx  = FIRST_LEVEL_IDX(virtual_addr);
     uint8_t second_level_idx = SECOND_LEVEL_IDX(virtual_addr);
     uint8_t third_level_idx  = THIRD_LEVEL_IDX(virtual_addr);
+
+    uint32_t physical_addr = 0;
 
     printf("First level idx: %d Second level idx: %d Third level idx: %d\n", first_level_idx, second_level_idx, third_level_idx);
     // check if page is already allocated
     if(is_valid_addr(virtual_addr)){
         printf("Page already allocated %x\n",virtual_addr);
-        return 0;
+        printf("Returning valid page\n");
+        physical_addr = tlb->get_page(virtual_addr);
+        if(physical_addr == 0){
+            physical_addr = page_table.levels[2].page[page_table.levels[1].page[page_table.levels[0].page[first_level_idx].addr * page_table.levels[1].size + second_level_idx].addr * page_table.levels[2].size + third_level_idx].addr;
+            tlb->add_page(virtual_addr, physical_addr);
+        }
+        return physical_addr;
     }
 
     // allocate new page
@@ -59,13 +67,13 @@ int8_t VM::alloc_page(uint32_t virtual_addr){
                         printf("Address space full\n");
                         return -2;
                     }
-                    
                     printf("Page allocated addr: %x page: %d idx : %d i: %d j: %d allocated addr: %x\n", virtual_addr, \
                         page_table.levels[2].page[ i * j * page_table.levels[2].size + third_level_idx].valid, \
                         (i * page_table.levels[1].size + second_level_idx) * j + third_level_idx, i, j, \
                         page_table.levels[2].page[j * page_table.levels[2].size + third_level_idx].addr);
                     tlb->add_page(virtual_addr, page_table.levels[2].page[j * page_table.levels[2].size + third_level_idx].addr);
-                    return 1;
+                    physical_addr = page_table.levels[2].page[j * page_table.levels[2].size + third_level_idx].addr;
+                    return physical_addr;
                 }
                 else{
                     printf("Third level is already allocated or full addr: %x page: %d idx : %d i: %d j: %d\n", virtual_addr, \
@@ -83,36 +91,6 @@ int8_t VM::alloc_page(uint32_t virtual_addr){
     }
     printf("Error\n");
     return -2;
-}
-
-uint32_t VM::get_page(uint32_t virtual_addr){
-    uint8_t first_level_idx  = FIRST_LEVEL_IDX(virtual_addr);
-    uint8_t second_level_idx = SECOND_LEVEL_IDX(virtual_addr);
-    uint8_t third_level_idx  = THIRD_LEVEL_IDX(virtual_addr);
-
-    uint32_t physical_addr = 0;
-    //printf("First level idx: %d Second level idx: %d Third level idx: %d\n", first_level_idx, second_level_idx, third_level_idx);
-    //printf("Reading address idx: %d \n", page_table.levels[1].page[page_table.levels[0].page[first_level_idx].addr * page_table.levels[1].size + second_level_idx].addr * page_table.levels[2].size + third_level_idx);
-    //printf("translated addr : %x\n",page_table.levels[2].page[page_table.levels[1].page[page_table.levels[0].page[first_level_idx].addr * page_table.levels[1].size + second_level_idx].addr * page_table.levels[2].size + third_level_idx].addr);
-    // check if page is already allocated
-    if(is_valid_addr(virtual_addr)){
-        printf("Returning valid page\n");
-        physical_addr = tlb->get_page(virtual_addr);
-        if(physical_addr == 0){
-            physical_addr = page_table.levels[2].page[page_table.levels[1].page[page_table.levels[0].page[first_level_idx].addr * page_table.levels[1].size + second_level_idx].addr * page_table.levels[2].size + third_level_idx].addr;
-            tlb->add_page(virtual_addr, physical_addr);
-        }
-        return physical_addr;
-    }
-    return 0;
-}
-
-VM::~VM(){
-    free(page_table.levels[0].page);
-    free(page_table.levels[1].page);
-    free(page_table.levels[2].page);
-    free(page_table.levels);
-    delete tlb;
 }
         
 uint32_t VM::get_new_addr(){
@@ -138,4 +116,12 @@ bool VM::is_valid_addr(uint32_t virtual_addr){
 
     }
     return false;
+}
+
+VM::~VM(){
+    free(page_table.levels[0].page);
+    free(page_table.levels[1].page);
+    free(page_table.levels[2].page);
+    free(page_table.levels);
+    delete tlb;
 }

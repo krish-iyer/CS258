@@ -16,6 +16,7 @@ uint32_t TLB::get_page(uint32_t virtual_addr){
         }
     }
     tlb_stats.num_misses++;
+    print_stats();
     return 0;
 }
 
@@ -42,6 +43,7 @@ void TLB::add_page(uint32_t virtual_addr, uint32_t physical_addr){
         tlb[idx].valid = true;
         tlb_stats.num_misses++;
     }
+    print_stats();
     return;
 }
 
