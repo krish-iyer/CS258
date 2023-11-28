@@ -224,7 +224,7 @@ uint32_t CACHE::set_data(uint32_t addr, uint32_t data){
     return 0;
 }
 
-uint32_t CACHE::exec (uint32_t addr, uint32_t data ,access_type_t access_type){
+uint32_t CACHE::exec(uint32_t addr, uint32_t data ,access_type_t access_type){
     if(access_type == READ){
         return get_data(addr);
     }

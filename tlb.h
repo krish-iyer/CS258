@@ -4,12 +4,13 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<inttypes.h>
+#include "common.h"
 
 class TLB{
 
     public:
         TLB(uint8_t tlb_size);
-        uint32_t get_page(uint32_t virtual_addr);
+        addr_ret_t get_page(uint32_t virtual_addr);
         void add_page(uint32_t virtual_addr, uint32_t physical_addr);
         void print_stats();
         virtual ~TLB();
@@ -29,7 +30,6 @@ class TLB{
             uint32_t num_misses;
             uint32_t num_entries;
         }tlb_stats_t;
-        
 
     private:
         tlb_entry_t *tlb;

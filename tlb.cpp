@@ -8,16 +8,21 @@ TLB::TLB(uint8_t tlb_size){
     tlb = (tlb_entry_t *)calloc(sizeof(tlb_entry_t) * size, sizeof(tlb_entry_t));
 }
 
-uint32_t TLB::get_page(uint32_t virtual_addr){
+addr_ret_t TLB::get_page(uint32_t virtual_addr){
+    addr_ret_t ret;
     for(int i = 0; i < size; i++){
         if(tlb[i].virtual_addr == virtual_addr && tlb[i].valid == true){
             tlb_stats.num_hits++;
-            return tlb[i].physical_addr;
+            ret.physical_addr = tlb[i].physical_addr;
+            ret.page_fault = false;
+            return ret;
         }
     }
+    ret.physical_addr = 0;
+    ret.page_fault = true;
     tlb_stats.num_misses++;
     print_stats();
-    return 0;
+    return ret;
 }
 
 void TLB::add_page(uint32_t virtual_addr, uint32_t physical_addr){
@@ -30,7 +35,6 @@ void TLB::add_page(uint32_t virtual_addr, uint32_t physical_addr){
                 tlb[i].physical_addr = physical_addr;
                 tlb[i].valid = true;
                 tlb_stats.num_entries++;
-                tlb_stats.num_misses++;
                 return;
             }
         }

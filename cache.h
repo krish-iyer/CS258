@@ -26,6 +26,7 @@ class CACHE{
         }access_type_t;
 
         typedef enum{
+            NONE,
             RANDOM,
             LRU,
             LFU,
