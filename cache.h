@@ -12,11 +12,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<inttypes.h>
+#include "common.h"
 
-#define MEM_BIT_LEN         2 // 4 bytes : 1 << 2
-#define CACHE_LINE_SIZE     64
-#define CACHE_OFFSET_MASK   0x0000000F
-#define CACHE_OFFSET_SHIFT  4
 
 class CACHE{
     public:
@@ -61,6 +58,7 @@ class CACHE{
             cache_type_t type;
         }cache_t;
 
+    public:
         typedef struct cache_stats{
             uint32_t num_hits;
             uint32_t num_misses;
@@ -68,24 +66,25 @@ class CACHE{
 
     public:
         CACHE(cache_type_t type, uint8_t size, uint8_t entry_size, cache_replacement_policy_t cache_policy);
-        uint32_t exec (uint32_t addr, uint32_t data ,access_type_t access_type);
+        data_ret_t exec (uint32_t addr, uint32_t data ,access_type_t access_type);
         void print_stats();
         virtual ~CACHE();
 
     private:
-        uint32_t get_data_direct_mapped(uint32_t addr);
-        uint32_t get_data_set_associative(uint32_t addr); 
-        uint32_t get_data_fully_associative(uint32_t addr);
-        uint32_t get_data(uint32_t addr);
-        uint32_t set_data_direct_mapped(uint32_t addr, uint32_t data);
-        uint32_t set_data_fully_associative(uint32_t addr, uint32_t data);
-        uint32_t set_data_set_associative(uint32_t addr, uint32_t data);
-        uint32_t set_data(uint32_t addr, uint32_t data);
+        data_ret_t get_data_direct_mapped(uint32_t addr);
+        data_ret_t get_data_set_associative(uint32_t addr); 
+        data_ret_t get_data_fully_associative(uint32_t addr);
+        data_ret_t get_data(uint32_t addr);
+        data_ret_t set_data_direct_mapped(uint32_t addr, uint32_t data);
+        data_ret_t set_data_fully_associative(uint32_t addr, uint32_t data);
+        data_ret_t set_data_set_associative(uint32_t addr, uint32_t data);
+        data_ret_t set_data(uint32_t addr, uint32_t data);
     
     private:
         cache_t cache;
-        cache_stats_t cache_stats;
         cache_replacement_policy_t policy;
+    public:
+        cache_stats_t cache_stats;
 };
 
 #endif // CACHE_H

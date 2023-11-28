@@ -21,7 +21,7 @@ addr_ret_t TLB::get_page(uint32_t virtual_addr){
     ret.physical_addr = 0;
     ret.page_fault = true;
     tlb_stats.num_misses++;
-    print_stats();
+    // print_stats();
     return ret;
 }
 
@@ -31,7 +31,7 @@ void TLB::add_page(uint32_t virtual_addr, uint32_t physical_addr){
         // add entry to tlb
         for(int i = 0; i < size; i++){
             if(tlb[i].valid == false){
-                printf("[TLB] Adding entry to tlb virtual %x phy %x\n", virtual_addr, physical_addr);
+                // printf("[TLB] Adding entry to tlb virtual %x phy %x\n", virtual_addr, physical_addr);
                 tlb[i].virtual_addr = virtual_addr;
                 tlb[i].physical_addr = physical_addr;
                 tlb[i].valid = true;
@@ -41,14 +41,14 @@ void TLB::add_page(uint32_t virtual_addr, uint32_t physical_addr){
         }
     }
     else{
-        printf("[TLB] TLB is full entries %d size %d adding %x phy %x\n", virtual_addr, physical_addr, tlb_stats.num_entries, size);
+        // printf("[TLB] TLB is full entries %d size %d adding %x phy %x\n", virtual_addr, physical_addr, tlb_stats.num_entries, size);
         uint8_t idx = rand() % size;
         tlb[idx].virtual_addr = virtual_addr;
         tlb[idx].physical_addr = physical_addr;
         tlb[idx].valid = true;
         tlb_stats.num_misses++;
     }
-    print_stats();
+    //print_stats();
     return;
 }
 

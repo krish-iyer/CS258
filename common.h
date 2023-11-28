@@ -23,11 +23,21 @@
 
 #define TLB_SIZE 16
 
+#define MEM_BIT_LEN         2 // 4 bytes : 1 << 2
+#define CACHE_LINE_SIZE     64
+#define CACHE_OFFSET_MASK   0x0000000F
+#define CACHE_OFFSET_SHIFT  4
+
 // structs
 typedef struct addr_ret{
     uint32_t physical_addr;
     bool     page_fault;
 }addr_ret_t;
+
+typedef struct data_ret{
+    uint32_t data;
+    bool     mem_fault;
+}data_ret_t;
 
 // func
 uint16_t count_bits(uint32_t num);

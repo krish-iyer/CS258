@@ -18,7 +18,7 @@ VM::VM(){
     page_table.levels[1].page = (page_entry_t *)calloc(sizeof(page_entry_t) * page_table.levels[0].size * page_table.levels[1].size, sizeof(page_entry_t));
     page_table.levels[2].page = (page_entry_t *)calloc(sizeof(page_entry_t) * page_table.levels[0].size * page_table.levels[1].size * page_table.levels[2].size, sizeof(page_entry_t));
     
-    printf("Page Table Initialized \n");
+    // printf("Page Table Initialized \n");
 }
 
 addr_ret_t VM::exec(uint32_t virtual_addr){
@@ -28,7 +28,7 @@ addr_ret_t VM::exec(uint32_t virtual_addr){
 
     uint32_t physical_addr = 0;
     addr_ret_t ret;
-    printf("First level idx: %d Second level idx: %d Third level idx: %d\n", first_level_idx, second_level_idx, third_level_idx);
+    // printf("First level idx: %d Second level idx: %d Third level idx: %d\n", first_level_idx, second_level_idx, third_level_idx);
     // check if page is already allocated
     ret = tlb->get_page(virtual_addr);
     if(ret.page_fault == true){
@@ -40,7 +40,7 @@ addr_ret_t VM::exec(uint32_t virtual_addr){
             return ret;
         }
         else{
-            printf("Page not allocated\n");
+            // printf("Page not allocated\n");
             // allocate new page
             // check if first level page is allocated
             for(int i = 1; i <= page_table.levels[0].size; i++){
@@ -58,15 +58,15 @@ addr_ret_t VM::exec(uint32_t virtual_addr){
                             page_table.levels[2].page[j * page_table.levels[2].size + third_level_idx].addr = get_new_addr();
 
                             if(page_table.levels[2].page[j * page_table.levels[2].size + third_level_idx].addr == 0){
-                                printf("Address space full\n");
+                                // printf("Address space full\n");
                                 ret.physical_addr = 0;
                                 ret.page_fault = true;
                                 return ret;
                             }
-                            printf("Page allocated addr: %x page: %d idx : %d i: %d j: %d allocated addr: %x\n", virtual_addr, \
-                                page_table.levels[2].page[ i * j * page_table.levels[2].size + third_level_idx].valid, \
-                                (i * page_table.levels[1].size + second_level_idx) * j + third_level_idx, i, j, \
-                                page_table.levels[2].page[j * page_table.levels[2].size + third_level_idx].addr);
+                            // printf("Page allocated addr: %x page: %d idx : %d i: %d j: %d allocated addr: %x\n", virtual_addr, \
+                            //     page_table.levels[2].page[ i * j * page_table.levels[2].size + third_level_idx].valid, \
+                            //     (i * page_table.levels[1].size + second_level_idx) * j + third_level_idx, i, j, \
+                            //     page_table.levels[2].page[j * page_table.levels[2].size + third_level_idx].addr);
                             tlb->add_page(virtual_addr, page_table.levels[2].page[j * page_table.levels[2].size + third_level_idx].addr);
                             physical_addr = page_table.levels[2].page[j * page_table.levels[2].size + third_level_idx].addr;
                             ret.physical_addr = physical_addr << OFFSET_SHIFT | (virtual_addr & OFFSET_MASK);
@@ -87,11 +87,13 @@ addr_ret_t VM::exec(uint32_t virtual_addr){
     else{
         return ret;
     }
+    ret.physical_addr = 0;
+    ret.page_fault = true;
     return ret;
 }
         
 uint32_t VM::get_new_addr(){
-    printf("Addr count: %d\n", addr_count);
+    // printf("Addr count: %d\n", addr_count);
     addr_count = (addr_count + 1) & PHYSICAL_ADDR_MASK;
     if(addr_count == 0){
         printf("Address space full\n");
