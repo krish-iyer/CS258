@@ -13,7 +13,7 @@ addr_ret_t TLB::get_page(uint32_t virtual_addr){
     for(int i = 0; i < size; i++){
         if(tlb[i].virtual_addr == virtual_addr && tlb[i].valid == true){
             tlb_stats.num_hits++;
-            ret.physical_addr = tlb[i].physical_addr;
+            ret.physical_addr = tlb[i].physical_addr << OFFSET_SHIFT | (virtual_addr & OFFSET_MASK);
             ret.page_fault = false;
             return ret;
         }
@@ -26,6 +26,7 @@ addr_ret_t TLB::get_page(uint32_t virtual_addr){
 }
 
 void TLB::add_page(uint32_t virtual_addr, uint32_t physical_addr){
+    // happened on a miss so no need to increment num_misses
     if(tlb_stats.num_entries < size){
         // add entry to tlb
         for(int i = 0; i < size; i++){
