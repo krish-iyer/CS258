@@ -7,6 +7,7 @@ files=(*Traces/Spec_Benchmark/*)
 # l1_cache_size=32
 # l2_cache_size=256
 l2_cache_entries=4
+l2_cache_type="DIRECT_MAPPED"
 case=2
 
 # Print each file name
@@ -21,7 +22,7 @@ do
                 for l2_cache_size in 512 1024 2048;
                 do
                     for file in "${files[@]}"; do
-                        ./main.out $tlb_size $cache_line_size $l1_cache_size $l2_cache_size $l2_cache_entries $cache_replacement_policy $case $file 
+                        ./main.out $tlb_size $cache_line_size $l1_cache_size $l2_cache_size $l2_cache_entries $l2_cache_type $cache_replacement_policy $case $file 
                     done
                 done
             done
