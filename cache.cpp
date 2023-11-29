@@ -1,11 +1,11 @@
 #include "cache.h"
 
-CACHE::CACHE(cache_type_t type, uint16_t size, uint16_t entry_size, cache_replacement_policy_t cache_policy){
+CACHE::CACHE(cache_type_t type, uint16_t size, uint16_t entry_size, cache_replacement_policy_t cache_policy, uint32_t cache_block_size){
     // initialize cache
     policy = cache_policy;
     cache.set_count = size;
     cache.type = type;
-
+    cache.block_size = cache_block_size;
     if(cache.type == DIRECT_MAPPED){
         cache.entry_size = 1; // for direct mapped cache
     }
@@ -22,8 +22,17 @@ CACHE::CACHE(cache_type_t type, uint16_t size, uint16_t entry_size, cache_replac
         cache.sets[i].entries_count = 0;
         cache.sets[i].size = cache.entry_size;
         cache.sets[i].entries = (cache_entry_t *)calloc(sizeof(cache_entry_t) * cache.sets[i].size, sizeof(cache_entry_t));
+        for(int j = 0; j < cache.sets[i].size; j++){
+            cache.sets[i].entries[j].data = (uint32_t *)calloc(sizeof(uint32_t) * cache_block_size, sizeof(uint32_t));
+            cache.sets[i].entries[j].modified = false;
+            cache.sets[i].entries[j].valid = false;
+        }
     }
     // initialize cache stats
+    for(int i=0;i< (cache.block_size >> MEM_BIT_LEN);i++){
+        cache.offset_mask = cache.offset_mask << 1;
+        cache.offset_mask = cache.offset_mask | 1;
+    }
     cache_stats.num_hits = 0;
     cache_stats.num_misses = 0;
 }
@@ -31,9 +40,9 @@ CACHE::CACHE(cache_type_t type, uint16_t size, uint16_t entry_size, cache_replac
 data_ret_t CACHE::get_data_direct_mapped(uint32_t addr){
 
     // printf("[Cache] Getting data\n");
-    uint8_t offset = addr & CACHE_OFFSET_MASK;
-    uint8_t set_idx = (addr >> CACHE_OFFSET_SHIFT) & (cache.set_count - 1);
-    uint32_t tag = addr >> (CACHE_OFFSET_SHIFT + count_bits(cache.set_count - 1));
+    uint8_t offset = addr & cache.offset_mask;
+    uint8_t set_idx = (addr >> cache.block_size >> MEM_BIT_LEN) & (cache.set_count - 1);
+    uint32_t tag = addr >> ((cache.block_size >> MEM_BIT_LEN) + count_bits(cache.set_count - 1));
     
     data_ret_t ret;
     // printf("[Cache] Offset: %d Set idx: %d Tag: %d\n", offset, set_idx, tag);
@@ -59,9 +68,9 @@ data_ret_t CACHE::get_data_direct_mapped(uint32_t addr){
 }
 
 data_ret_t CACHE::get_data_set_associative(uint32_t addr){
-    uint8_t offset = addr & CACHE_OFFSET_MASK;
-    uint8_t set_idx = (addr >> CACHE_OFFSET_SHIFT) & (cache.set_count - 1);
-    uint32_t tag = addr >> (CACHE_OFFSET_SHIFT + count_bits(cache.set_count - 1));
+    uint8_t offset = addr & cache.offset_mask;
+    uint8_t set_idx = (addr >> (cache.block_size >> MEM_BIT_LEN)) & (cache.set_count - 1);
+    uint32_t tag = addr >> ((cache.block_size >> MEM_BIT_LEN) + count_bits(cache.set_count - 1));
 
     data_ret_t ret;
 
@@ -145,8 +154,8 @@ data_ret_t CACHE::get_data_set_associative(uint32_t addr){
 }   
 
 data_ret_t CACHE::get_data_fully_associative(uint32_t addr){
-    uint8_t offset = addr & CACHE_OFFSET_MASK;
-    uint32_t tag = addr >> (CACHE_OFFSET_SHIFT);
+    uint8_t offset = addr & cache.offset_mask;
+    uint32_t tag = addr >> (cache.block_size >> MEM_BIT_LEN);
 
     data_ret_t ret;
 
@@ -222,9 +231,9 @@ data_ret_t CACHE::get_data(uint32_t addr){
 }
 
 data_ret_t CACHE::set_data_direct_mapped(uint32_t addr, uint32_t data){
-    uint8_t offset = addr & CACHE_OFFSET_MASK;
-    uint8_t set_idx = (addr >> CACHE_OFFSET_SHIFT) & (cache.set_count - 1);
-    uint32_t tag = addr >> (CACHE_OFFSET_SHIFT + count_bits(cache.set_count - 1));
+    uint8_t offset = addr & cache.offset_mask;
+    uint8_t set_idx = (addr >> cache.block_size >> MEM_BIT_LEN) & (cache.set_count - 1);
+    uint32_t tag = addr >> ((cache.block_size >> MEM_BIT_LEN) + count_bits(cache.set_count - 1));
     
     data_ret_t  ret;
 
@@ -250,8 +259,8 @@ data_ret_t CACHE::set_data_direct_mapped(uint32_t addr, uint32_t data){
 }
 
 data_ret_t CACHE::set_data_fully_associative(uint32_t addr, uint32_t data){
-    uint8_t offset = addr & CACHE_OFFSET_MASK;
-    uint32_t tag = addr >> (CACHE_OFFSET_SHIFT);
+    uint8_t offset = addr & cache.offset_mask;
+    uint32_t tag = addr >> (cache.block_size >> MEM_BIT_LEN);
 
     data_ret_t ret;
 
@@ -292,9 +301,9 @@ data_ret_t CACHE::set_data_fully_associative(uint32_t addr, uint32_t data){
 }
 
 data_ret_t CACHE::set_data_set_associative(uint32_t addr, uint32_t data){
-    uint8_t offset = addr & CACHE_OFFSET_MASK;
-    uint8_t set_idx = (addr >> CACHE_OFFSET_SHIFT) & (cache.set_count - 1);
-    uint32_t tag = addr >> (CACHE_OFFSET_SHIFT + count_bits(cache.set_count - 1));
+    uint8_t offset = addr & cache.offset_mask;
+    uint8_t set_idx = (addr >> cache.block_size >> MEM_BIT_LEN) & (cache.set_count - 1);
+    uint32_t tag = addr >> ((cache.block_size >> MEM_BIT_LEN) + count_bits(cache.set_count - 1));
     
     data_ret_t ret;
     

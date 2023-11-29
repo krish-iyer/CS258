@@ -34,7 +34,7 @@ class VM{
             uint8_t level_count;
         }page_table_t;
     public:
-        VM();
+        VM(uint32_t tlb_size);
         addr_ret_t exec(uint32_t virtual_addr);
         ~VM();
     private:

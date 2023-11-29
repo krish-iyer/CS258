@@ -1,13 +1,14 @@
 #include "mem_manager.h"
 
-MEM_MANAGER::MEM_MANAGER()
+MEM_MANAGER::MEM_MANAGER(uint32_t tlb_size, uint32_t cache_line_size, uint32_t l1_cache_size , uint32_t l2_cache_size, uint8_t l2_cache_entries, \
+    CACHE::cache_replacement_policy_t l2_cache_policy)
 {
-    vm = new VM();
+    vm = new VM(tlb_size);
     // L1 cache direct mapped 8 sets 1 entry replacement policy: none
-    L1CacheInstr = new CACHE(CACHE::DIRECT_MAPPED, 512, 1, CACHE::FIFO);
-    L1CacheData = new CACHE(CACHE::DIRECT_MAPPED, 512, 1, CACHE::NONE);
+    L1CacheInstr = new CACHE(CACHE::DIRECT_MAPPED, l1_cache_size/2, 1, CACHE::FIFO, cache_line_size);
+    L1CacheData = new CACHE(CACHE::DIRECT_MAPPED, l1_cache_size/2, 1, CACHE::NONE, cache_line_size);
     // L2 cache fully associative 1 set 8 entries replacement policy: Random
-    L2Cache = new CACHE(CACHE::SET_ASSOCIATIVE, 128, 8, CACHE::FIFO);
+    L2Cache = new CACHE(CACHE::SET_ASSOCIATIVE, l2_cache_size, l2_cache_entries, l2_cache_policy, cache_line_size);
 }
 
 bool MEM_MANAGER::exec(uint32_t virtual_addr, CACHE::access_type_t access_type, bool is_instr)

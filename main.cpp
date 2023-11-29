@@ -5,12 +5,39 @@
 #include <iostream>
 #include <sstream>
 
-int main(){
 
-    MEM_MANAGER mem_manager;
+int main(int argc, char **argv){
+
+    if(argc != 9){
+        printf("Usage: ./mem_manager <tlb_size> <cache_line_size> <l1_cache_size> <l2_cache_size> <l2_cache_entries> <cache_replacement_policy> <case> <trace_file>\n");
+        return 0;
+    }
+
+    uint32_t tlb_size = std::stoul(argv[1]); 
+    uint32_t cache_line_size = std::stoul(argv[2]);
+    uint32_t l1_cache_size = std::stoul(argv[3]);
+    uint32_t l2_cache_size = std::stoul(argv[4]);
+    uint8_t l2_cache_entries = std::stoul(argv[5]);
+
+    CACHE::cache_replacement_policy_t policy;
+
+    if(std::string(argv[6]) == "RANDOM")
+        policy = CACHE::RANDOM;
+    else if(std::string(argv[6]) == "LRU")
+        policy = CACHE::LRU;
+    else if(std::string(argv[6]) == "FIFO")
+        policy = CACHE::FIFO;
+    else
+        policy = CACHE::NONE;
+
+    MEM_MANAGER mem_manager(tlb_size, cache_line_size, l1_cache_size, l2_cache_size, l2_cache_entries, policy);
 
     std::ifstream infile;
-    infile.open("Traces/Spec_Benchmark/008.espresso.din");
+    std::ofstream outfile;
+
+    outfile.open("output_"+std::string(argv[7])+".txt", std::ios::app | std::ios::out);
+
+    infile.open(argv[8]);
 
     uint64_t count = 0;
     try {
@@ -44,6 +71,14 @@ int main(){
     printf("L1 Instr Cache hits: %d misses: %d\n", mem_manager.L1CacheInstr->cache_stats.num_hits, mem_manager.L1CacheInstr->cache_stats.num_misses);
     printf("L1 Data Cache hits: %d misses: %d\n", mem_manager.L1CacheData->cache_stats.num_hits, mem_manager.L1CacheData->cache_stats.num_misses);
     printf("L2 Cache hits: %d misses: %d\n", mem_manager.L2Cache->cache_stats.num_hits, mem_manager.L2Cache->cache_stats.num_misses);
-    // printf("TLB hits: %d misses: %d\n", vm.tlb->tlb_stats.num_hits, vm.tlb->tlb_stats.num_misses);
+    
+    outfile << "Case: " << argv[7] << " TLB size: " << tlb_size << " Cache line size: " << cache_line_size << " L1 Cache size: " << l1_cache_size << " L2 Cache size: " << l2_cache_size << " L2 Cache entries: " << l2_cache_entries << " Cache replacement policy: " << argv[6] \
+        << " File: " << argv[8] << " TLB hits: " << mem_manager.vm->tlb->tlb_stats.num_hits << " misses: " << mem_manager.vm->tlb->tlb_stats.num_misses \
+        << " L1 Instr Cache hits: " << mem_manager.L1CacheInstr->cache_stats.num_hits << " misses: " << mem_manager.L1CacheInstr->cache_stats.num_misses \
+        << " L1 Data Cache hits: " << mem_manager.L1CacheData->cache_stats.num_hits << " misses: " << mem_manager.L1CacheData->cache_stats.num_misses \
+        << " L2 Cache hits: " << mem_manager.L2Cache->cache_stats.num_hits << " misses: " << mem_manager.L2Cache->cache_stats.num_misses \
+        << " L2 Cache hits: " << mem_manager.L2Cache->cache_stats.num_hits << " misses: " << mem_manager.L2Cache->cache_stats.num_misses << std::endl;
+    
+    outfile.close();
     return 0;
 }   

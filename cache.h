@@ -38,7 +38,7 @@ class CACHE{
     private:
         typedef struct cache_entry{
             uint32_t tag;
-            uint32_t data[CACHE_LINE_SIZE >> MEM_BIT_LEN];
+            uint32_t *data;
             bool     modified;
             bool     valid;
         }cache_entry_t;
@@ -55,6 +55,8 @@ class CACHE{
             // fixed size for all sets
             uint32_t      entry_size;
             cache_type_t type;
+            uint32_t      block_size;
+            uint32_t      offset_mask;
         }cache_t;
 
     public:
@@ -64,7 +66,7 @@ class CACHE{
         }cache_stats_t;
 
     public:
-        CACHE(cache_type_t type, uint16_t size, uint16_t entry_size, cache_replacement_policy_t cache_policy);
+        CACHE(cache_type_t type, uint16_t size, uint16_t entry_size, cache_replacement_policy_t cache_policy, uint32_t cache_block_size);
         data_ret_t exec (uint32_t addr, uint32_t data ,access_type_t access_type);
         void print_stats();
         virtual ~CACHE();

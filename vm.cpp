@@ -1,11 +1,11 @@
 #include "vm.h"
 
-VM::VM(){
+VM::VM(uint32_t tlb_size){
     // set addr counter to 0
     addr_count = 0;
     // initialize page table
     // calloc initializes all values to 0 as opposed to malloc
-    tlb = new TLB(TLB_SIZE);
+    tlb = new TLB(tlb_size);
     page_table.level_count = 3;
     page_table.levels = (level_t *)calloc(sizeof(level_t) * page_table.level_count, sizeof(level_t));
     

@@ -21,12 +21,8 @@
 #define THIRD_LEVEL_PAGE_SIZE   64
 #define PHYSICAL_ADDR_MASK      0x000FFFFF
 
-#define TLB_SIZE 8
+#define MEM_BIT_LEN         4 // 4 bytes : 1 << 2
 
-#define MEM_BIT_LEN         2 // 4 bytes : 1 << 2
-#define CACHE_LINE_SIZE     64
-#define CACHE_OFFSET_MASK   0x0000000F
-#define CACHE_OFFSET_SHIFT  4
 
 // structs
 typedef struct addr_ret{
