@@ -26,7 +26,6 @@ class CACHE{
             NONE,
             RANDOM,
             LRU,
-            LFU,
             FIFO
         }cache_replacement_policy_t;
         
@@ -46,15 +45,15 @@ class CACHE{
 
         typedef struct cache_set{
             cache_entry_t *entries;
-            uint8_t       entries_count;
-            uint16_t       size;
+            uint16_t       entries_count;
+            uint32_t       size;
         }cache_set_t;
 
         typedef struct cache{
             cache_set_t *sets;
-            uint16_t     set_count;
+            uint32_t     set_count;
             // fixed size for all sets
-            uint16_t      entry_size;
+            uint32_t      entry_size;
             cache_type_t type;
         }cache_t;
 

@@ -65,10 +65,32 @@ data_ret_t CACHE::get_data_set_associative(uint32_t addr){
 
     data_ret_t ret;
 
+    // printf("[Cache] Getting data tag %d ; addr %d ; countbits %d\n", tag, addr, count_bits(cache.set_count - 1));
     for(int i = 0; i < cache.sets[set_idx].entries_count; i++){
         if(cache.sets[set_idx].entries[i].valid == true && cache.sets[set_idx].entries[i].tag == tag){
             cache_stats.num_hits++;
-            ret.data = cache.sets[set_idx].entries[i].data[offset];
+            if(policy == LRU){
+                // move entry to front
+                // printf("[Cache] Hit %d\n",cache_stats.num_hits);
+                // for (int j=0;j<cache.sets[set_idx].entries_count;j++){
+                //     printf("%d ",cache.sets[set_idx].entries[j].tag);
+                // }
+                // printf("\n");
+                cache_entry_t temp = cache.sets[set_idx].entries[i];
+                for(int j = i; j < cache.entry_size - 1 ; j++){
+                    cache.sets[set_idx].entries[j] = cache.sets[set_idx].entries[j+1];
+                }
+                // printf("After reordering \n");
+                cache.sets[set_idx].entries[cache.entry_size-1] = temp;
+                ret.data = cache.sets[set_idx].entries[i].data[offset];
+                // for (int j=0;j<cache.sets[set_idx].entries_count;j++){
+                //     printf("%d ",cache.sets[set_idx].entries[j].tag);
+                // }
+                // printf("\n");
+            }
+            else{
+                ret.data = cache.sets[set_idx].entries[i].data[offset];
+            }
             ret.mem_fault = false;
             return ret;
         }
@@ -77,16 +99,41 @@ data_ret_t CACHE::get_data_set_associative(uint32_t addr){
     // if cache is full
     if(cache.sets[set_idx].entries_count == cache.sets[set_idx].size){
         // replace random entry
-        uint8_t idx = rand() % cache.sets[set_idx].size;
-        cache.sets[set_idx].entries[idx].valid = true;
-        cache.sets[set_idx].entries[idx].tag = tag;
-        cache.sets[set_idx].entries[idx].data[offset] = 0; // TODO: data not implemented ; issue a read from memory
-        ret.data = cache.sets[set_idx].entries[idx].data[offset];
-        ret.mem_fault = true;
-        return ret;
+        if (policy == FIFO || policy == LRU){
+            uint8_t idx = cache.entry_size - 1;
+            // printf("################# [Cache] Miss %d %d\n",cache_stats.num_misses,tag);
+            // for (int j=0;j<cache.sets[set_idx].entries_count;j++){
+            //     printf("%d ",cache.sets[set_idx].entries[j].tag);
+            // }
+            // printf("\n");
+            for(int i=0 ; i < cache.entry_size - 1; i++){
+                cache.sets[set_idx].entries[i] = cache.sets[set_idx].entries[i+1];
+            }
+            cache.sets[set_idx].entries[idx].valid = true;
+            cache.sets[set_idx].entries[idx].tag = tag;
+            cache.sets[set_idx].entries[idx].data[offset] = 0; // TODO: data not implemented ; issue a read from memory
+            // printf("After replacement \n");
+            // for (int j=0;j<cache.sets[set_idx].entries_count;j++){
+            //     printf("%d ",cache.sets[set_idx].entries[j].tag);
+            // }
+            // printf("\n");
+            ret.data = cache.sets[set_idx].entries[idx].data[offset];
+            ret.mem_fault = true;
+            return ret;
+        }
+        else { // RANDOM
+            uint8_t idx = rand() % cache.sets[0].size;
+            cache.sets[set_idx].entries[idx].valid = true;
+            cache.sets[set_idx].entries[idx].tag = tag;
+            cache.sets[set_idx].entries[idx].data[offset] = 0; // TODO: data not implemented ; issue a read from memory
+            ret.data = cache.sets[set_idx].entries[idx].data[offset];
+            ret.mem_fault = true;
+            return ret;
+        }
     }
     else{
         // add new entry
+        // printf("[Cache] Miss %d %d\n",cache_stats.num_misses,tag);
         cache.sets[set_idx].entries[cache.sets[set_idx].entries_count].valid = true;
         cache.sets[set_idx].entries[cache.sets[set_idx].entries_count].tag = tag;
         cache.sets[set_idx].entries[cache.sets[set_idx].entries_count].data[offset] = 0; // TODO: data not implemented ; issue a read from memory
@@ -106,7 +153,18 @@ data_ret_t CACHE::get_data_fully_associative(uint32_t addr){
     for(int i = 0; i < cache.sets[0].entries_count; i++){
         if(cache.sets[0].entries[i].valid == true && cache.sets[0].entries[i].tag == tag){
             cache_stats.num_hits++;
-            ret.data = cache.sets[0].entries[i].data[offset];
+            if(policy == LRU){
+                // move entry to front
+                cache_entry_t temp = cache.sets[0].entries[i];
+                for(int j = i; j < cache.sets[0].entries_count -1 ; j++){
+                    cache.sets[0].entries[j] = cache.sets[0].entries[j+1];
+                }
+                cache.sets[0].entries[cache.entry_size-1] = temp;
+                ret.data = cache.sets[0].entries[i].data[offset];
+            }
+            else{
+                ret.data = cache.sets[0].entries[i].data[offset];
+            }
             ret.mem_fault = false;
             return ret;
         }
@@ -115,13 +173,29 @@ data_ret_t CACHE::get_data_fully_associative(uint32_t addr){
     // if cache is full
     if(cache.sets[0].entries_count == cache.sets[0].size){
         // replace random entry
-        uint8_t idx = rand() % cache.sets[0].size;
-        cache.sets[0].entries[idx].valid = true;
-        cache.sets[0].entries[idx].tag = tag;
-        cache.sets[0].entries[idx].data[offset] = 0; // TODO: data not implemented ; issue a read from memory
-        ret.data = cache.sets[0].entries[idx].data[offset];
-        ret.mem_fault = true;
-        return ret;
+        if (policy == FIFO || policy == LRU){
+            uint8_t idx = cache.entry_size - 1;
+            for(int i=0;i< cache.entry_size - 1;i++){
+                cache.sets[0].entries[i] = cache.sets[0].entries[i+1];
+            }
+            cache.sets[0].entries[idx].valid = true;
+            cache.sets[0].entries[idx].tag = tag;
+            cache.sets[0].entries[idx].data[offset] = 0; // TODO: data not implemented ; issue a read from memory
+            ret.data = cache.sets[0].entries[idx].data[offset];
+            ret.mem_fault = true;
+            return ret;
+        }
+        else { // RANDOM
+            uint8_t idx = rand() % cache.sets[0].size;
+            cache.sets[0].entries[idx].valid = true;
+            cache.sets[0].entries[idx].tag = tag;
+            cache.sets[0].entries[idx].data[offset] = 0; // TODO: data not implemented ; issue a read from memory
+            ret.data = cache.sets[0].entries[idx].data[offset];
+            ret.mem_fault = true;
+            return ret;
+        }
+        
+
     }
     else{
         // add new entry
