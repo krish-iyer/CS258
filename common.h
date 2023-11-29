@@ -21,7 +21,7 @@
 #define THIRD_LEVEL_PAGE_SIZE   64
 #define PHYSICAL_ADDR_MASK      0x000FFFFF
 
-#define TLB_SIZE 16
+#define TLB_SIZE 8
 
 #define MEM_BIT_LEN         2 // 4 bytes : 1 << 2
 #define CACHE_LINE_SIZE     64

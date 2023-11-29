@@ -77,11 +77,12 @@ addr_ret_t VM::exec(uint32_t virtual_addr){
 
                 }
                 else{
-                    printf("Second level is already allocated or full\n");
+                    //printf("Second level is already allocated or full\n");
                     ret.physical_addr = 0;
                     ret.page_fault = true;
                 }
             }
+            printf("Error: Page Table is full\n");
         }
     }
     else{

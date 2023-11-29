@@ -1,6 +1,6 @@
 #include "cache.h"
 
-CACHE::CACHE(cache_type_t type, uint8_t size, uint8_t entry_size, cache_replacement_policy_t cache_policy){
+CACHE::CACHE(cache_type_t type, uint16_t size, uint16_t entry_size, cache_replacement_policy_t cache_policy){
     // initialize cache
     policy = cache_policy;
     cache.set_count = size;
@@ -29,12 +29,14 @@ CACHE::CACHE(cache_type_t type, uint8_t size, uint8_t entry_size, cache_replacem
 }
         
 data_ret_t CACHE::get_data_direct_mapped(uint32_t addr){
+
+    // printf("[Cache] Getting data\n");
     uint8_t offset = addr & CACHE_OFFSET_MASK;
     uint8_t set_idx = (addr >> CACHE_OFFSET_SHIFT) & (cache.set_count - 1);
     uint32_t tag = addr >> (CACHE_OFFSET_SHIFT + count_bits(cache.set_count - 1));
     
-    // printf("[Cache] Offset: %d Set idx: %d Tag: %d\n", offset, set_idx, tag);
     data_ret_t ret;
+    // printf("[Cache] Offset: %d Set idx: %d Tag: %d\n", offset, set_idx, tag);
 
     if(cache.sets[set_idx].entries[0].valid == true && cache.sets[set_idx].entries[0].tag == tag){
         cache_stats.num_hits++;
@@ -51,6 +53,7 @@ data_ret_t CACHE::get_data_direct_mapped(uint32_t addr){
         cache.sets[set_idx].entries[0].data[offset] = 0; // TODO: data not implemented ; issue a read from memory
         ret.data = cache.sets[set_idx].entries[0].data[offset];
         ret.mem_fault = true;
+        // printf("[Cache] Miss %d\n",cache_stats.num_misses);
         return ret;
     }
 }

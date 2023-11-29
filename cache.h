@@ -47,14 +47,14 @@ class CACHE{
         typedef struct cache_set{
             cache_entry_t *entries;
             uint8_t       entries_count;
-            uint8_t       size;
+            uint16_t       size;
         }cache_set_t;
 
         typedef struct cache{
             cache_set_t *sets;
-            uint8_t     set_count;
+            uint16_t     set_count;
             // fixed size for all sets
-            uint8_t      entry_size;
+            uint16_t      entry_size;
             cache_type_t type;
         }cache_t;
 
@@ -65,7 +65,7 @@ class CACHE{
         }cache_stats_t;
 
     public:
-        CACHE(cache_type_t type, uint8_t size, uint8_t entry_size, cache_replacement_policy_t cache_policy);
+        CACHE(cache_type_t type, uint16_t size, uint16_t entry_size, cache_replacement_policy_t cache_policy);
         data_ret_t exec (uint32_t addr, uint32_t data ,access_type_t access_type);
         void print_stats();
         virtual ~CACHE();
