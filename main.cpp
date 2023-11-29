@@ -17,8 +17,9 @@ int main(int argc, char **argv){
     uint32_t cache_line_size = std::stoul(argv[2]);
     uint32_t l1_cache_size = std::stoul(argv[3]);
     uint32_t l2_cache_size = std::stoul(argv[4]);
-    uint8_t l2_cache_entries = std::stoul(argv[5]);
+    uint32_t l2_cache_entries = std::stoul(argv[5]);
 
+    printf("l2_cache entries %d\n", l2_cache_entries);
     CACHE::cache_replacement_policy_t policy;
 
     if(std::string(argv[6]) == "RANDOM")
