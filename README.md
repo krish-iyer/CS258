@@ -60,13 +60,13 @@ TLB Size   TLB Miss Rate(%)
 
 ### L1 Cache
 
-In this case tests were done for 64 and 128 bit the cache line and different size of L1 cache. Here are few observations. L1 Cache is configured as direct mapped cached for this and following tests. It's also split into Instruction and Data cache equally.
+In this case tests were done for 64 and 128 Byte the cache line and different size of L1 cache. Here are few observations. L1 Cache is configured as direct mapped cached for this and following tests. It's also split into Instruction and Data cache equally.
 
   1. As expected miss rate decreases as the cache size increases.
   2. There's no significant change from the change in the cache line.
   3. Though in few traces cache line made significant improvement. 
   4. Data chache miss rates are higher than instruction. This hints a about the access pattern of the data. 
-     1. Instructions are well localised and data bit more random.
+      1. Instructions are well localised and data bit more random.
   5. Size of cache leads to better improvement in D cache than I cache due the very reason that the random access are better aided by larger cache size.
 
 
@@ -83,7 +83,7 @@ Cache Line  L1 Size     L1 I-cache Miss Rate    L1 D-cache Miss Rate
 
 ### L2 Cache
 
-The expected trend could be observed, as cache size increases miss rate tends to decrease. Here cache lines make huge difference and that hint's access to data is done on the near by addresses. There's no good explanation on why for 64 bit cache line and 512 sets, the miss rate is 91% on reason could be that most requests are handled by L1 and the few that got through were not accessed frequently because of the inclusivity of the L1.
+The expected trend could be observed, as cache size increases miss rate tends to decrease. Here cache lines make huge difference and that hint's access to data is done on the near by addresses. There's no good explanation on why for 64 Byte cache line and 512 sets, the miss rate is 91% on reason could be that most requests are handled by L1 and the few that got through were not accessed frequently because of the inclusivity of the L1.
 
 ```
 Cache Line  L2 Cache Size   L2 Miss Rate         
