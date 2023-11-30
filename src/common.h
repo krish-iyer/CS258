@@ -10,7 +10,7 @@
 #define OFFSET_MASK                 0x000001FF
 #define FIRST_LEVEL_VM_ADDR_SHIFT   14
 #define SECOND_LEVEL_VM_ADDR_SHIFT  6
-#define OFFSET_SHIFT                9
+#define OFFSET_SHIFT                12
 
 #define FIRST_LEVEL_IDX(addr)  (((addr >> OFFSET_SHIFT) & FIRST_LEVEL_VM_ADDR_MASK)  >> FIRST_LEVEL_VM_ADDR_SHIFT)
 #define SECOND_LEVEL_IDX(addr) (((addr >> OFFSET_SHIFT) & SECOND_LEVEL_VM_ADDR_MASK) >> SECOND_LEVEL_VM_ADDR_SHIFT)

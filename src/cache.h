@@ -74,12 +74,7 @@ class CACHE{
     private:
         data_ret_t get_data_direct_mapped(uint32_t addr);
         data_ret_t get_data_set_associative(uint32_t addr); 
-        data_ret_t get_data_fully_associative(uint32_t addr);
         data_ret_t get_data(uint32_t addr);
-        data_ret_t set_data_direct_mapped(uint32_t addr, uint32_t data);
-        data_ret_t set_data_fully_associative(uint32_t addr, uint32_t data);
-        data_ret_t set_data_set_associative(uint32_t addr, uint32_t data);
-        data_ret_t set_data(uint32_t addr, uint32_t data);
     
     private:
         cache_t cache;

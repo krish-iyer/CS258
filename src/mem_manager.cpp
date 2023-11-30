@@ -5,8 +5,8 @@ MEM_MANAGER::MEM_MANAGER(uint32_t tlb_size, uint32_t cache_line_size, uint32_t l
 {
     vm = new VM(tlb_size);
     // L1 cache direct mapped 8 sets 1 entry replacement policy: none
-    L1CacheInstr = new CACHE(CACHE::DIRECT_MAPPED, l1_cache_size/2, 1, CACHE::FIFO, cache_line_size);
-    L1CacheData = new CACHE(CACHE::DIRECT_MAPPED, l1_cache_size/2, 1, CACHE::NONE, cache_line_size);
+    L1CacheInstr = new CACHE(CACHE::DIRECT_MAPPED, l1_cache_size/8, 1, CACHE::RANDOM, cache_line_size);
+    L1CacheData = new CACHE(CACHE::DIRECT_MAPPED, l1_cache_size/8, 1, CACHE::RANDOM, cache_line_size);
     // L2 cache fully associative 1 set 8 entries replacement policy: Random
     L2Cache = new CACHE(l2_cache_type, l2_cache_size, l2_cache_entries, l2_cache_policy, cache_line_size);
 }

@@ -48,18 +48,15 @@ int main(int argc, char **argv){
     std::ifstream infile;
     std::ofstream outfile;
 
-    outfile.open("output_"+std::string(argv[8])+".txt", std::ios::app | std::ios::out);
+    outfile.open("output_"+std::string(argv[8])+".csv", std::ios::app | std::ios::out);
 
     infile.open(argv[9]);
 
     uint64_t count = 0;
 
     try {
-        while(!infile.eof()){
+        for (std::string line; std::getline(infile, line);) {
             count++;
-            std::string line;
-            std::getline(infile, line, '\n');
-
             std::string word;
             std::stringstream ss(line);
             uint32_t instr[3];
@@ -86,12 +83,28 @@ int main(int argc, char **argv){
     printf("L1 Data Cache hits: %d misses: %d\n", mem_manager.L1CacheData->cache_stats.num_hits, mem_manager.L1CacheData->cache_stats.num_misses);
     printf("L2 Cache hits: %d misses: %d\n", mem_manager.L2Cache->cache_stats.num_hits, mem_manager.L2Cache->cache_stats.num_misses);
     
-    outfile << "Case: " << argv[8] << " TLB size: " << tlb_size << " Cache line size: " << cache_line_size << " L1 Cache size: " << l1_cache_size << " L2 Cache size: " << l2_cache_size << " L2 Cache entries: " << l2_cache_entries << " L2 Cache Type: " << argv[6] << " Cache replacement policy: " << argv[7] \
-        << " File: " << argv[9] << " TLB hits: " << mem_manager.vm->tlb->tlb_stats.num_hits << " misses: " << mem_manager.vm->tlb->tlb_stats.num_misses \
-        << " L1 Instr Cache hits: " << mem_manager.L1CacheInstr->cache_stats.num_hits << " misses: " << mem_manager.L1CacheInstr->cache_stats.num_misses \
-        << " L1 Data Cache hits: " << mem_manager.L1CacheData->cache_stats.num_hits << " misses: " << mem_manager.L1CacheData->cache_stats.num_misses \
-        << " L2 Cache hits: " << mem_manager.L2Cache->cache_stats.num_hits << " misses: " << mem_manager.L2Cache->cache_stats.num_misses \
-        << " L2 Cache hits: " << mem_manager.L2Cache->cache_stats.num_hits << " misses: " << mem_manager.L2Cache->cache_stats.num_misses << std::endl;
+    outfile << argv[8] << "," 
+            << tlb_size << ","
+            << cache_line_size << ","
+            << l1_cache_size << ","
+            << l2_cache_size << ","
+            << l2_cache_entries << ","
+            << argv[6] << ","
+            << argv[7] << ","
+            << argv[9] << ","
+            << mem_manager.vm->tlb->tlb_stats.num_hits << ","
+            << mem_manager.vm->tlb->tlb_stats.num_misses << ","
+            << mem_manager.L1CacheInstr->cache_stats.num_hits << ","
+            << mem_manager.L1CacheInstr->cache_stats.num_misses << ","
+            << mem_manager.L1CacheData->cache_stats.num_hits << ","
+            << mem_manager.L1CacheData->cache_stats.num_misses << ","
+            << mem_manager.L2Cache->cache_stats.num_hits << ","
+            << mem_manager.L2Cache->cache_stats.num_misses << ","
+            << double(mem_manager.vm->tlb->tlb_stats.num_misses) / (mem_manager.vm->tlb->tlb_stats.num_misses + mem_manager.vm->tlb->tlb_stats.num_hits) << ","
+            << double(mem_manager.L1CacheInstr->cache_stats.num_misses) / (mem_manager.L1CacheInstr->cache_stats.num_misses + mem_manager.L1CacheInstr->cache_stats.num_hits) << ","           
+            << double(mem_manager.L1CacheData->cache_stats.num_misses) / (mem_manager.L1CacheData->cache_stats.num_misses + mem_manager.L1CacheData->cache_stats.num_hits) << ","
+            << double(mem_manager.L2Cache->cache_stats.num_misses) / (mem_manager.L2Cache->cache_stats.num_misses + mem_manager.L2Cache->cache_stats.num_hits)
+            << std::endl;
     
     outfile.close();
     return 0;

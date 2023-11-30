@@ -25,17 +25,19 @@ addr_ret_t VM::exec(uint32_t virtual_addr){
     uint8_t first_level_idx  = FIRST_LEVEL_IDX(virtual_addr);
     uint8_t second_level_idx = SECOND_LEVEL_IDX(virtual_addr);
     uint8_t third_level_idx  = THIRD_LEVEL_IDX(virtual_addr);
+    uint32_t offset = virtual_addr & OFFSET_MASK;
+    uint32_t page_addr = virtual_addr >> OFFSET_SHIFT;
 
-    uint32_t physical_addr = 0;
+    uint32_t frame_addr = 0;
     addr_ret_t ret;
     // printf("First level idx: %d Second level idx: %d Third level idx: %d\n", first_level_idx, second_level_idx, third_level_idx);
     // check if page is already allocated
-    ret = tlb->get_page(virtual_addr);
+    ret = tlb->get_page(page_addr);
     if(ret.page_fault == true){
         if(page_table.levels[2].page[page_table.levels[1].page[page_table.levels[0].page[first_level_idx].addr * page_table.levels[1].size + second_level_idx].addr * page_table.levels[2].size + third_level_idx].valid){
-            physical_addr = page_table.levels[2].page[page_table.levels[1].page[page_table.levels[0].page[first_level_idx].addr * page_table.levels[1].size + second_level_idx].addr * page_table.levels[2].size + third_level_idx].addr;
-            tlb->add_page(virtual_addr, physical_addr);
-            ret.physical_addr = physical_addr << OFFSET_SHIFT | (virtual_addr & OFFSET_MASK);
+            frame_addr = page_table.levels[2].page[page_table.levels[1].page[page_table.levels[0].page[first_level_idx].addr * page_table.levels[1].size + second_level_idx].addr * page_table.levels[2].size + third_level_idx].addr;
+            tlb->add_page(page_addr, frame_addr);
+            ret.physical_addr = frame_addr << OFFSET_SHIFT | offset;
             ret.page_fault = false;
             return ret;
         }
@@ -67,9 +69,9 @@ addr_ret_t VM::exec(uint32_t virtual_addr){
                             //     page_table.levels[2].page[ i * j * page_table.levels[2].size + third_level_idx].valid, \
                             //     (i * page_table.levels[1].size + second_level_idx) * j + third_level_idx, i, j, \
                             //     page_table.levels[2].page[j * page_table.levels[2].size + third_level_idx].addr);
-                            tlb->add_page(virtual_addr, page_table.levels[2].page[j * page_table.levels[2].size + third_level_idx].addr);
-                            physical_addr = page_table.levels[2].page[j * page_table.levels[2].size + third_level_idx].addr;
-                            ret.physical_addr = physical_addr << OFFSET_SHIFT | (virtual_addr & OFFSET_MASK);
+                            frame_addr = page_table.levels[2].page[j * page_table.levels[2].size + third_level_idx].addr;
+                            tlb->add_page(page_addr, frame_addr);
+                            ret.physical_addr = frame_addr << OFFSET_SHIFT | offset;
                             ret.page_fault = false;
                             return ret;
                         }
