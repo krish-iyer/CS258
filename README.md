@@ -27,6 +27,21 @@ scripts
   └── run_tests.sh
 
 ```
+# Generating Tests
+
+## Building BIN
+
+```
+g++ main.cpp common.cpp vm.cpp tlb.cpp cache.cpp mem_manager.cpp -o main.out
+```
+
+You can also use precompiled bin files and existing scripts. Make sure binaries in **bin** directory is reachable.
+
+```
+./scripts/case1.sh
+```
+
+A CSV file will automatically be generated after the execution with the trace.
 
 # Analysis
 ## Case 1 : TLB and Cache
