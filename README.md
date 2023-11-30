@@ -1,9 +1,39 @@
+# Cache Simulator
+
+This project consists of a Page Table, TLB and Cache simulator. Memory Manager(src/mem_manager.cpp/h) manages memory accesses and operations. It intialises VM, L1 and L2 cache. VM(src/vm.cpp/h) manages page allocation and page table along with TLB. Once virtual to physical is translated, request goes to the L1 cache or L2 depending on the if it's a hit or miss. 
+
+Here's L1 cache is a direct mapped cache which is inclusive with L2 Cache. L1 is also split into L1 Data and L1 Instruction. IF/ READ/ WRITE from the trace are all considered to the memory accesses and don't implement different different functionalities.
+
+Actual physical address is byte addressable. A page fault in the TLB simply signifies that requested entry doesn't exist. A page fault in the page table signifies that page couldn't be allocated. Currently, there's no support for swapping out the page table. TLB eviction happens randomly.  
+
+```
+src
+  ├── cache.cpp
+  ├── cache.h
+  ├── common.cpp
+  ├── common.h
+  ├── main.cpp
+  ├── mem_manager.cpp
+  ├── mem_manager.h
+  ├── tlb.cpp
+  ├── tlb.h
+  ├── vm.cpp
+  └── vm.h
+scripts
+  ├── case1.sh
+  ├── case2.sh
+  ├── case3.sh
+  ├── generate_graphs_out1.py
+  └── run_tests.sh
+
+```
+
 # Analysis
-## Case 1
+## Case 1 : TLB and Cache
 
 ### TLB
 
-The average TLB miss rate (misses/total access) for 8 and 16 entry tlb turned out to be as following. This was expected because increase in TLB size resulted in less number of misses and hence lesser miss rate.
+The average TLB miss rate (misses/total access) for 8 and 16 entry TLB turned out to be as following. This was expected because increase in TLB size resulted in less number of misses and hence lesser miss rate.
 
 ```
 TLB Size   TLB Miss Rate(%)    
@@ -50,7 +80,7 @@ Cache Line  L2 Cache Size   L2 Miss Rate
             2048            6.181888
 ```
 
-## Case 2
+## Case 2 : Replacement Policy
 
 In this case we have done some tests with different replacement policies. Here are few key observations
 
@@ -79,7 +109,7 @@ Cache Line  L2 Cache Size   Replacement Policy          L2 Miss Rate(%)
                             LRU                         11.928463
                             RANDOM                       5.599380
 ```                
-## Case 3
+## Case 3 : Cache Types
 
 Here we try to plot the contrast between Type of the cache and other parameters. 
 
